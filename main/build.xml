@@ -1,0 +1,119 @@
+﻿<?xml version="1.0"?>
+
+<!-- ===================================================================== -->
+<!-- Copyright 2004-2013 Lilian Chamontin                                  -->
+<!-- THIS IS THE ANT BUILD FILE FOR THE VLDOCKING FRAMEWORK 3.0            -->
+<!-- LGPL Licence                                                          -->
+<!-- ===================================================================== -->
+
+<project name="vldocking_3.0" default="jar" basedir=".">
+
+  <!-- ===================================================================== -->
+  <!-- PROPERTIES                                                            -->
+  <!-- ===================================================================== -->
+
+  <property name="classpath" value="" />
+
+  <property name="build.dir" value="build" />
+  <property name="jar.dir" value="jar" />
+  <property name="src.dir" value="src" />
+  <property name="javadoc.dir" value="doc" />
+  
+  <property name="vldocking.version" value="3.0.2" />
+
+  <!-- ===================================================================== -->
+  <!-- PREPARE BUILD                                                         -->
+  <!-- ===================================================================== -->
+
+  <target name="prepare">
+    <mkdir dir="${build.dir}" />
+    <mkdir dir="${jar.dir}" />
+    <mkdir dir="${src.dir}" />
+    <mkdir dir="${javadoc.dir}" />
+    <copy todir="${build.dir}">
+      <fileset dir="${src.dir}">
+        <patternset>
+          <include name="**/*.gif" />
+          <include name="**/*.png" />
+          <include name="**/*.jpg" />
+        </patternset>
+      </fileset>
+    </copy>
+
+  </target>
+
+  <!-- ===================================================================== -->
+  <!-- COMPILE                                                               -->
+  <!-- ===================================================================== -->
+
+  <target name="compile" depends="prepare">
+
+    <javac destdir="${build.dir}"
+           classpath="${classpath};"
+           debug="on" deprecation="off" optimize="on" includeantruntime="false">
+        <src path="${src.dir}"/>
+           <include name="com/vldocking/**"/>
+    </javac>
+  </target>
+
+  <!-- ===================================================================== -->
+  <!-- JAR FILE                                                              -->
+  <!-- ===================================================================== -->
+
+  <target name="jar" depends="compile">
+
+    <delete dir="${jar.dir}/vldocking-${vldocking.version}.jar" />
+
+    <jar jarfile="${jar.dir}/vldocking-${vldocking.version}.jar"
+         basedir="${build.dir}" >
+      <include name="com/vldocking/**"/>
+      <exclude name="**/doc-files/**"/>
+    </jar>
+
+  </target>
+
+  <!-- ===================================================================== -->
+  <!-- JAVADOC FOLDER & ZIP                                                             -->
+  <!-- ===================================================================== -->
+  
+  <target name="javadoc" depends="prepare">
+    <javadoc destdir="${javadoc.dir}/gen"
+             author="false"
+             version="false"
+             use="true"
+             overview="${src.dir}/com/vldocking/swing/docking/overview.html"
+             link="http://java.sun.com/j2se/1.5.0/docs/api"
+             windowtitle="VLDocking Framework ${vldocking.version} API">
+      <classpath>
+        <pathelement path="${java.class.path}/"/>
+      </classpath>
+      <packageset dir="${src.dir}" >
+        <include name="com/vldocking/**" />
+      </packageset>
+
+      <bottom><![CDATA[<i>&copy; Copyright 2004-2013 Lilian Chamontin. All Rights Reserved.]]></bottom>
+    </javadoc>
+	<zip destfile="${javadoc.dir}/vldocking-${vldocking.version}-doc.zip" basedir="${javadoc.dir}/gen" update="false" whenempty="fail" compress="true" />
+  </target>
+  
+  <!-- =================================================================== -->
+  <!-- CLEAN                                                               -->
+  <!-- =================================================================== -->
+
+  <target name="clean">
+    <delete dir="${build.dir}" />
+    <delete dir="${jar.dir}" />
+    <delete dir="${javadoc.dir}" />
+  </target>
+  
+  <!-- ===================================================================== -->
+  <!-- RELEASE GENERATOR                                                              -->
+  <!-- ===================================================================== -->
+  
+  <target name="release" depends="compile,jar,javadoc">
+    <delete dir="${build.dir}" />
+	<delete dir="${javadoc.dir}/gen" />
+  </target>
+</project>
+
+<!-- End of build.xml -->
