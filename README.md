@@ -40,7 +40,7 @@ VLDocking has been created in 2004, and is licenced as under the LGPL terms.
 
 VLDocking is used by companies worldwide and open source projects.
 
-![alt text](https://vldocking.googlecode.com/svn/wiki/vldocking3.jpg)
+![](http://vldocking.googlecode.com/svn/wiki/vldocking3.jpg)
 
 License
 =======
