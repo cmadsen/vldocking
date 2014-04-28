@@ -1,15 +1,14 @@
-vldocking
-=========
+# vldocking
 
 This is a fork of https://bitbucket.org/akuhtz/vldocking
 
-h2. Why ?
+## Why ?
 
 Because the original project seems to be dead :(
 
 See https://code.google.com/p/vldocking/ for more information, tutorials etc.
 
-h2. And so, what's new ?
+## And so, what's new ?
 
 * Switched from ant to mvn
 * Renamed package names to use old vlsolutions instead of vldocking
@@ -17,9 +16,9 @@ h2. And so, what's new ?
 * Fixed issues with read/wrilXML on multiple sceens
 * Added new empty ctor to FloatingDialog to make floating windows appear in taskbar. Extend DefaultDockableContainerFactory.createFloatingDockableContainer and return new FloatingDialog()
 
-h2. How to get the released versions ?
+## How to get the released versions ?
 
-h3. Maven
+### Maven
 
 Just add this to your @pom.xml@ file:
 
@@ -62,7 +61,7 @@ Documentation
 
 The VLDocking tutorial can be found here https://code.google.com/p/vldocking/wiki/tutorial1
 
-h2. I found a bug, what can I do ?
+## I found a bug, what can I do ?
 
 Feel free to fork this repo, and make a "pull request":http://help.github.com/send-pull-requests/. Ideally, write a test !
  
