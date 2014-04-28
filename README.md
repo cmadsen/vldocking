@@ -13,7 +13,7 @@ See https://code.google.com/p/vldocking/ for more information, tutorials etc.
 * Switched from ant to mvn
 * Renamed package names to use old vlsolutions instead of vldocking
 * Released a 3.0.3 version available through maven central
-* Fixed issues with read/wrilXML on multiple sceens
+* Fixed issues with read/wrilXML on multiple screens
 * Added new empty ctor to `FloatingDialog` to make floating windows appear in taskbar. Extend `DefaultDockableContainerFactory.createFloatingDockableContainer` and return `new FloatingDialog()`
 
 ## How to get the released versions ?
