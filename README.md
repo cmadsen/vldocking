@@ -14,7 +14,7 @@ See https://code.google.com/p/vldocking/ for more information, tutorials etc.
 * Renamed package names to use old vlsolutions instead of vldocking
 * Released a 3.0.3 version available through maven central
 * Fixed issues with read/wrilXML on multiple sceens
-* Added new empty ctor to FloatingDialog to make floating windows appear in taskbar. Extend DefaultDockableContainerFactory.createFloatingDockableContainer and return new FloatingDialog()
+* Added new empty ctor to `FloatingDialog` to make floating windows appear in taskbar. Extend `DefaultDockableContainerFactory.createFloatingDockableContainer` and return `new FloatingDialog()`
 
 ## How to get the released versions ?
 
@@ -24,11 +24,13 @@ Just add this to your @pom.xml@ file:
 
 The dependencies:
 
-bc. <dependency>
+```xml
+<dependency>
     <groupId>dk.navicon</groupId>
     <artifactId>vldocking</artifactId>
     <version>3.0.3</version>
 </dependency>
+```
 
 VLDocking, the swing docking framework
 
