@@ -20,7 +20,7 @@ See https://code.google.com/p/vldocking/ for more information, tutorials etc.
 
 ### Maven
 
-Just add this to your @pom.xml@ file:
+Just add this to your `pom.xml` file:
 
 The dependencies:
 
@@ -40,7 +40,7 @@ VLDocking has been created in 2004, and is licenced as under the LGPL terms.
 
 VLDocking is used by companies worldwide and open source projects.
 
-![alt text](http://vldocking.googlecode.com/svn/wiki/vldocking3.jpg)
+![alt text](https://vldocking.googlecode.com/svn/wiki/vldocking3.jpg)
 
 License
 =======
