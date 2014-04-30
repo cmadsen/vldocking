@@ -3009,7 +3009,9 @@ public class DockingDesktop extends JLayeredPane {
 
 		out.println("<DockingDesktop name=\"" + desktopName + "\">");
 		out.println("<DockingPanel x=\"" + (int) windowLocation.getX()
-				+ "\" y=\"" + (int) windowLocation.getY() + "\"" + ">");
+				+ "\" y=\"" + (int) windowLocation.getY() + "\" width=\""
+				+ desktopWindow.getWidth() + "\" height=\""
+				+ desktopWindow.getHeight() + "\"" + ">");
 		if (dockingPanel.getComponentCount() > 0) {
 			// only one top component (DockableContainer or SplitContainer)
 			xmlWriteComponent(dockingPanel.getComponent(0), out);
@@ -3446,13 +3448,25 @@ public class DockingDesktop extends JLayeredPane {
 				try {
 					final int x = Integer.parseInt(elt.getAttribute("x"));
 					final int y = Integer.parseInt(elt.getAttribute("y"));
+
+					final int width = Integer.parseInt(elt
+							.getAttribute("width"));
+					final int height = Integer.parseInt(elt
+							.getAttribute("height"));
+
+					Window w = SwingUtilities
+							.getWindowAncestor(DockingDesktop.this);
+					log.error("w=" + w);
+					if (w != null && w.isVisible()) {
+						w.setBounds(x, y, width, height);
+					}
 					// will make window bounce :-(
 					addAncestorListener(new AncestorListener() {
 						@Override
 						public void ancestorAdded(AncestorEvent event) {
 							Window w = SwingUtilities
 									.getWindowAncestor(DockingDesktop.this);
-							w.setBounds(x, y, w.getWidth(), w.getHeight());
+							w.setBounds(x, y, width, height);
 							removeAncestorListener(this);
 						}
 
