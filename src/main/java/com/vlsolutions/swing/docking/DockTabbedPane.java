@@ -318,7 +318,7 @@ public class DockTabbedPane extends JTabbedPane implements DockDropReceiver, Doc
 		popupTab = - 1;
 		for(int i = 0; i < getTabCount(); i++) {
 			Rectangle tabbounds = getBoundsAt(i);
-			if(tabbounds.contains(p)) {
+			if(tabbounds != null && tabbounds.contains(p)) {
 				// all right
 				return getDockableAt(i);
 			}
@@ -479,7 +479,7 @@ public class DockTabbedPane extends JTabbedPane implements DockDropReceiver, Doc
 
 		for(int i = 0; i < getTabCount(); i++) {
 			Rectangle tabbounds = getBoundsAt(i);
-			if(tabbounds.contains(p)) {
+			if(tabbounds != null && tabbounds.contains(p)) {
 				// insert before this tab if allowed
 				SingleDockableContainer tab = (SingleDockableContainer) getComponentAt(i);
 				if(tab.getDockable() == dragSource.getDockable()) {
@@ -549,6 +549,9 @@ public class DockTabbedPane extends JTabbedPane implements DockDropReceiver, Doc
 		// not on the tabs, check if after the last
 		int lastTab = getTabCount() - 1;
 		Rectangle lasttabbounds = getBoundsAt(lastTab);
+		if (lasttabbounds == null) {
+			return;
+		}
 		Rectangle afterlast = new Rectangle(lasttabbounds.x + lasttabbounds.width, lasttabbounds.y, getX() + getWidth() - (lasttabbounds.x + lasttabbounds.width), lasttabbounds.height);
 		if(afterlast.contains(p)) {
 			SingleDockableContainer dockableContainer = (SingleDockableContainer) getComponentAt(lastTab);
@@ -783,6 +786,9 @@ public class DockTabbedPane extends JTabbedPane implements DockDropReceiver, Doc
 		// now we know we can insert the dragged component here
 		int tab = getSelectedIndex();
 		Rectangle tabbounds = getBoundsAt(tab);
+		if (tabbounds == null) {
+			return;
+		}
 		if(vbounds.equals(lastDropBounds) && tabbounds.equals(lastDropTabBounds)) {
 			// optimized (cached)
 		} else {
@@ -874,6 +880,9 @@ public class DockTabbedPane extends JTabbedPane implements DockDropReceiver, Doc
 			/** @todo : clamp values */
 		} else { // TOP
 			Rectangle tabBounds = getBoundsAt(0);
+			if (tabBounds == null) {
+				return false;
+			}
 			int yTab = tabBounds.y + tabBounds.height; // lower coordinate of tabbed selectors
 
 			innerBounds = new Rectangle(20, yTab + 20, getWidth() - 20 - 20, getHeight() - yTab - 20 - 20);
@@ -926,7 +935,7 @@ public class DockTabbedPane extends JTabbedPane implements DockDropReceiver, Doc
 		// which component is dragged ?
 		for(int i = 0; i < getTabCount(); i++) {
 			Rectangle tabbounds = getBoundsAt(i);
-			if(tabbounds.contains(p)) {
+			if(tabbounds != null && tabbounds.contains(p)) {
 				draggedDockable = (SingleDockableContainer) getComponentAt(i);
 				if(i > 2 && i == getTabCount() - 1) {
 					// workaround for a focus problem : when the JTabbedPane has focus on the last tab
@@ -940,9 +949,15 @@ public class DockTabbedPane extends JTabbedPane implements DockDropReceiver, Doc
 		}
 		// search for whole tab drag : look after last tab and in-between tabs
 		Rectangle header = getBoundsAt(0);
+		if (header == null) {
+			return false;
+		}
 		header.x = 0;
 		int lastTab = getTabCount() - 1;
 		Rectangle lasttabbounds = getBoundsAt(lastTab);
+		if (lasttabbounds == null) {
+			return false;
+		}
 		header = header.union(lasttabbounds);
 
 		Rectangle afterlast = new Rectangle(lasttabbounds.x + lasttabbounds.width, lasttabbounds.y, getX() + getWidth() - (lasttabbounds.x + lasttabbounds.width), lasttabbounds.height);

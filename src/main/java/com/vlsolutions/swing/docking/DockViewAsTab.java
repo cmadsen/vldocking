@@ -466,7 +466,7 @@ public class DockViewAsTab extends DockView implements SingleDockableContainer {
 
 		public boolean startDragComponent(Point p) {
 			Rectangle bounds = getBoundsAt(0);
-			return bounds.contains(p);
+			return bounds != null && bounds.contains(p);
 		}
 
 		public Container getDockableContainer() {
