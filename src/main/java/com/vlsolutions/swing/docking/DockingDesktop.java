@@ -3456,7 +3456,6 @@ public class DockingDesktop extends JLayeredPane {
 
 					Window w = SwingUtilities
 							.getWindowAncestor(DockingDesktop.this);
-					log.error("w=" + w);
 					if (w != null && w.isVisible()) {
 						w.setBounds(x, y, width, height);
 					}
@@ -3479,7 +3478,7 @@ public class DockingDesktop extends JLayeredPane {
 						}
 					});
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.debug("", e);
 				}
 			} else if (name.equals("Border")) {
 				int zone = Integer.parseInt(elt.getAttribute("zone"));
