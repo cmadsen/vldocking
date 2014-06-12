@@ -389,11 +389,11 @@ public class FloatingDialog extends JDialog implements
 			// @todo : this will be refactored to plug custom title rendering
 			Color darker, brighter;
 			if (isActive()) {
-				darker = activeCaptionColor;
-				brighter = activeCaptionBorderColor;
+				darker = UIManager.getColor("activeCaption");
+				brighter = UIManager.getColor("activeCaptionBorder");
 			} else {
-				darker = inactiveCaptionColor;
-				brighter = inactiveCaptionBorderColor;
+				darker = UIManager.getColor("inactiveCaption");
+				brighter = UIManager.getColor("inactiveCaptionBorder");
 			}
 			/*
 			 * Graphics2D g2 = (Graphics2D) g; Paint paint = g2.getPaint();
@@ -448,9 +448,9 @@ public class FloatingDialog extends JDialog implements
 
 		public void paintComponent(Graphics g) {
 			if (isActive()) {
-				g.setColor(activeCaptionColor);
+				g.setColor(UIManager.getColor("activeCaption"));
 			} else {
-				g.setColor(inactiveCaptionColor);
+				g.setColor(UIManager.getColor("inactiveCaption"));
 			}
 			g.fillRect(0, 0, getWidth(), getHeight());
 		}
