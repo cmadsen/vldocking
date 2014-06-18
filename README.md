@@ -15,6 +15,8 @@ See https://code.google.com/p/vldocking/ for more information, tutorials etc.
 * Released a 3.0.3 version available through maven central
 * Fixed issues with read/wrilXML on multiple screens
 * Added new empty ctor to `FloatingDialog` to make floating windows appear in taskbar. Extend `DefaultDockableContainerFactory.createFloatingDockableContainer` and return `new FloatingDialog()`
+* Fixed LAF issues e.g., when switching Substance skin
+* Fixed issue with borders not being set on single dock windows until an ancestor change events occured
 
 ## How to get the released versions ?
 
@@ -28,7 +30,7 @@ The dependencies:
 <dependency>
     <groupId>dk.navicon</groupId>
     <artifactId>vldocking</artifactId>
-    <version>3.0.3</version>
+    <version>3.0.4</version>
 </dependency>
 ```
 
