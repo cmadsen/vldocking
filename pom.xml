@@ -9,7 +9,7 @@
 	<!-- groupId>com.vldocking</groupId -->
 	<groupId>dk.navicon</groupId>
 	<artifactId>vldocking</artifactId>
-	<version>3.0.5-SNAPSHOT</version>
+	<version>3.0.5</version>
 	<packaging>jar</packaging>
 	<url>https://github.com/cmadsen/vldocking</url>
 
