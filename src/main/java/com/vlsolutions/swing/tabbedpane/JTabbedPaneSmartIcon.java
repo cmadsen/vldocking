@@ -117,10 +117,7 @@ public class JTabbedPaneSmartIcon implements Icon, Cloneable {
 		try {
 		    defaultHints = (Map) Toolkit.getDefaultToolkit().getDesktopProperty("awt.font.desktophints");
 		} catch(AWTError ignore) {
-		} finally {
-		    if (defaultHints == null) {
-		        defaultHints = new RenderingHints(null);
-		    }
+		    defaultHints = new RenderingHints(null);
 		}
 
 	}
@@ -203,7 +200,7 @@ public class JTabbedPaneSmartIcon implements Icon, Cloneable {
 		Graphics2D g2 = (Graphics2D) g;
 		getRenderingHints(g2, defaultHints, originalHints);
 		g2.addRenderingHints(defaultHints);
-		
+
 		if(icon != null) {
 			icon.paintIcon(c, g, x, y);
 		}
@@ -235,14 +232,14 @@ public class JTabbedPaneSmartIcon implements Icon, Cloneable {
 		g2.addRenderingHints(originalHints);
 
 	}
-	
+
 	/**
 	  * Get rendering hints from a Graphics instance.
 	  * "hintsToSave" is a Map of RenderingHint key-values.
 	  * For each hint key present in that map, the value of that
 	  * hint is obtained from the Graphics and stored as the value
 	  * for the key in savedHints.
-	  * 
+	  *
 	  * From: http://docs.oracle.com/javase/7/docs/api/java/awt/doc-files/DesktopProperties.html
 	  */
 	private Map getRenderingHints(Graphics2D g2d, Map hintsToSave, Map savedHints) {
