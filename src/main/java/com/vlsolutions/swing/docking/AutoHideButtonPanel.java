@@ -101,22 +101,17 @@ public class AutoHideButtonPanel extends JPanel {
 
 	private class ButtonHighlighter extends MouseAdapter {
 
-		Color highlight = UIManager.getColor("VLDocking.highlight");
-
 		public void mouseEntered(MouseEvent e) {
 			AutoHideButton btn = (AutoHideButton) e.getSource();
 			if(! btn.isSelected()) { // selected buttons have their own pain style
-				btn.setBackground(highlight);
-				btn.setOpaque(true);
-				btn.repaint();
+			    btn.setHighlighted(true);
 			}
 		}
 
 		public void mouseExited(MouseEvent e) {
 			AutoHideButton btn = (AutoHideButton) e.getSource();
 			if(! btn.isSelected()) { // selected buttons have their own pain style
-				btn.setOpaque(false);
-				btn.repaint();
+			    btn.setHighlighted(false);
 			}
 		}
 	}
