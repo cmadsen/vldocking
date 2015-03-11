@@ -21,6 +21,7 @@ package com.vlsolutions.swing.docking.ui;
 import com.vlsolutions.swing.docking.AutoHideButtonPanel;
 import com.vlsolutions.swing.docking.DockingConstants;
 
+import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -59,12 +60,14 @@ public class AutoHideButtonPanelUI extends BasicPanelUI implements PropertyChang
 	public void installUI(JComponent comp) {
 		super.installUI(comp);
 		installBorder((AutoHideButtonPanel) comp);
+		installBackground(comp);
 		comp.addPropertyChangeListener(AutoHideButtonPanel.PROPERTY_BORDERZONE, this);
 	}
 
 	public void uninstallUI(JComponent comp) {
 		super.uninstallUI(comp);
 		comp.setBorder(null);
+		comp.setBackground(null);
 		comp.removePropertyChangeListener(this);
 	}
 
@@ -85,6 +88,13 @@ public class AutoHideButtonPanelUI extends BasicPanelUI implements PropertyChang
 		}
 	}
 
+	protected void installBackground(JComponent comp) {
+	    Color color = UIManager.getColor("AutoHideButtonPanel.background");
+        if (color != null) {
+            comp.setBackground(color);
+        }
+	}
+	
 	public void propertyChange(PropertyChangeEvent e) {
 		installBorder((AutoHideButtonPanel) e.getSource());
 	}
