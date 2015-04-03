@@ -118,7 +118,7 @@ public class AutoHideButtonUI extends BasicLabelUI implements PropertyChangeList
 	public void paint(Graphics g, JComponent comp) {
 		AutoHideButton btn = (AutoHideButton) comp;
 		int zone = btn.getZone();
-		if(zone == DockingConstants.INT_HIDE_TOP || zone == DockingConstants.INT_SPLIT_BOTTOM) {
+		if(zone == DockingConstants.INT_HIDE_TOP || zone == DockingConstants.INT_HIDE_BOTTOM) {
 			super.paint(g, comp);
 		} else {
 			// vertical button : we have to rely on a custom paint
