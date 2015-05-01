@@ -63,6 +63,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.border.Border;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
@@ -409,6 +410,8 @@ public class DockingDesktop extends JLayeredPane {
 		contentPane.add(rightBorderPane, BorderLayout.EAST);
 		contentPane.add(dockingPanel, BorderLayout.CENTER);
 
+		installBorders();
+
 		add(contentPane, DEFAULT_LAYER);
 		mouseMotionGrabber.setVisible(false);
 
@@ -586,6 +589,13 @@ public class DockingDesktop extends JLayeredPane {
 			}
 		});
 
+	}
+
+	private void installBorders() {
+	    Border border = UIManager.getBorder("DockingDesktop.border");
+	    if (border != null) {
+	        dockingPanel.setBorder(border);
+	    }
 	}
 
 	/**
