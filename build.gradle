@@ -55,7 +55,7 @@ bintray {
     key = System.getenv('BINTRAY_KEY')
     pkg {
         repo = 'maven'
-        name = 'org.omegat.vldocking'
+        name = 'vldocking'
         licenses = ['LGPL-3.0']
         userOrg = 'omegat-org'
         websiteUrl = 'https://github.com/omegat-org/vldocking'
