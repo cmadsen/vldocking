@@ -1,7 +1,4 @@
-#summary Customizing the User interface
-#sidebar TableOfContents
-
-= Lesson 8 : Customizing the User Interface  = 
+# Lesson 8 : Customizing the User Interface 
 
 
 This is the 8th part of the VLDocking Framework for Java Swing applications.
@@ -9,9 +6,9 @@ This is the 8th part of the VLDocking Framework for Java Swing applications.
 This lesson describes how to change the Look And Feel of VLDocking. 
 
 
-== The new UI delegation model of VLDocking == 
+## The new UI delegation model of VLDocking 
 
-=== VLDocking UI Delegates === 
+### VLDocking UI Delegates
 
 
 VLDocking uses UI delegate classes to paint the look and feel of many of its components.
@@ -31,7 +28,7 @@ Theses classes are dynamically loaded at startup, and use many UI properties to 
 
 
 
-=== Replacing UI Delegates === 
+### Replacing UI Delegates 
 
 
 Please note that most UI settings are accessible with UI properties, and thus cas be changed 
@@ -51,35 +48,35 @@ Here is how to declare them :
 Example :
 
 
-{{{
-public static void main(String[] args){
-    // first, preload the UI to avoid erasing your own customizations
-    DockingUISettings.getInstance().installUI(); 
-    // and start customizing...
-    UIManager.put("DockViewTitleBarUI", "your.own.ui.UIDelegateClassName"); 
-    // (replaced the DockViewTitleBar UI by another class)
-    ...
-}
-}}}
+```java
+    public static void main(String[] args) {
+        // first, preload the UI to avoid erasing your own customizations
+        DockingUISettings.getInstance().installUI();
+        // and start customizing...
+        UIManager.put("DockViewTitleBarUI", "your.own.ui.UIDelegateClassName");
+        // (replaced the DockViewTitleBar UI by another class)
+        ...
+    }
+```
 
 
 
-===  Updating the existing UI  === 
+###  Updating the existing UI 
 
 The easiest way to update the UI is by tweaking the UIManager properties.
 
 For example, if you want a special border for maximized dockable, use : 
 
-{{{
-// declare your border 
-Border myBorder = ...
-// put it in the UI property map. 
-*UIManager.put("DockView.maximizedDockableBorder", myBorder);*
-// and that's it !
-}}}
+```java
+    // declare your border
+    Border myBorder = ...
+    // put it in the UI property map.
+    UIManager.put("DockView.maximizedDockableBorder", myBorder);
+    // and that's it !
+```
 
 
-Please note that *to avoid having your own UI settings beeing erased *by the default ones, 
+Please note that *to avoid having your own UI settings beeing erased* by the default ones, 
 you will have to follow the pattern :
 
 
@@ -89,23 +86,23 @@ you will have to follow the pattern :
 
 
 
-{{{
-public static void main(String[] args){
-    // first, preload the UI to avoid erasing your own customizations
-    DockingUISettings.getInstance().installUI(); 
-    
-    // declare your border 
-    Border myBorder = ...
-    // and start customizing...
-    *UIManager.put("DockView.maximizedDockableBorder", myBorder);*    
-    ...
-}
-}}}
+```java
+    public static void main(String[] args) {
+        // first, preload the UI to avoid erasing your own customizations
+        DockingUISettings.getInstance().installUI();
+
+        // declare your border
+        Border myBorder = ...
+        // and start customizing...
+        UIManager.put("DockView.maximizedDockableBorder", myBorder);
+        ...
+    }
+```
 
 Now that you know how to proceed, here is the long list of customizable properties...
  
-== Customizable properties ==  
-===  Border properties === 
+## Customizable properties  
+###  Border properties
 
 <table border="1">
 <thead>
@@ -131,7 +128,7 @@ Now that you know how to proceed, here is the long list of customizable properti
 <tr> <td>FloatingDialog.titleBorder</td> <td>Border</td> <td>Border used for the title (drag header) of the FloatingDialog</td></tr>
 </tbody></table>
 
-===  Color properties  === 
+###  Color properties
 
 <table border="1">
 <thead>
@@ -140,7 +137,7 @@ Now that you know how to proceed, here is the long list of customizable properti
 <tr> <td>DockingDesktop.notificationColor</td> <td>Color</td> <td>blinking color for notifications</td></tr>
 </tbody></table>
 
-===  Icons === 
+###  Icons 
 
 <table border="1">
 <thead>
@@ -190,7 +187,7 @@ property must also be set to true</td></tr>
 </tbody></table>
 
 
-===  Labels and Fonts  === 
+###  Labels and Fonts 
 
 <table border="1">
 <thead>
@@ -210,7 +207,7 @@ property must also be set to true</td></tr>
 <tr> <td>DockTabbedPane.floatButtonText</td> <td>String</td> <td>Text for the float button in tab</td></tr>
 </tbody></table>
 
-===  Displaying buttons in title bars  === 
+###  Displaying buttons in title bars 
 
 <table border="1">
 <thead>
@@ -225,7 +222,7 @@ property must also be set to true</td></tr>
 <tr> <td>DockViewTitleBar.isAttachButtonDisplayed</td> <td>boolean</td> <td>display or not the attach button in the title bar</td></tr>
 </tbody></table>
 
-===  KeyStrokes  === 
+###  KeyStrokes 
 
 <table border="1">
 <thead>
@@ -237,7 +234,7 @@ property must also be set to true</td></tr>
 <tr> <td>DockingDesktop.floatActionAccelerator</td> <td>KeyStroke</td> <td>KeyStroke for float/attach action (on selected dockable)</td></tr>
 </tbody></table>
 
-===  UI Delegates  === 
+###  UI Delegates 
 
 
 <table border="1"><thead><tr><th>UI property</th><th>type</th><th>effect</th></tr></thead><tbody>
@@ -252,7 +249,7 @@ property must also be set to true</td></tr>
 <tr><td>ToolBarGripperUI</td> <td>class name</td> <td>UI delegate for the toolbar "gripper"</td></tr>
 </tbody></table>
 
-===  Cursors === 
+###  Cursors 
 
 Starting from version 2.0.3 it is now possible to change the mouse cursor images used during 
 drag gestures.
@@ -265,7 +262,7 @@ drag gestures.
 </tbody></table>
 
 
-===  Other properties === 
+###  Other properties 
 
 <table border="1">
 <thead>
@@ -282,7 +279,7 @@ drag gestures.
 <tr> <td>FloatingContainer.paintDragShape </td> <td>Boolean</td> <td>if true, a drag outline shape will follow the mouse when dragging (warning : consumes CPU)</td></tr>
 </tbody> </table>
 
-== The two basic VLDocking styles == 
+## The two basic VLDocking styles 
 
 
 VLDocking 1.0 provided a "shadowed" style (similar to the eclipse look and feel).
@@ -295,30 +292,30 @@ with tabs on top of tabbed containers (version 1.0 had them at bottom).
 You can choose select between the following provided styles (more to come) with the methods : 
 
 
-{{{
-// version 1.0 style
-DockingPreferences.setShadowDesktopStyle();
-}}}
+```java
+    // version 1.0 style
+    DockingPreferences.setShadowDesktopStyle();
+```
 
- [http://vldocking.googlecode.com/svn/wiki/shadowed_style.jpg]
+ ![](shadowed_style.jpg)
 
  _The "Shadow Style"_
 
-{{{
-// or version 1.0 alternative style
-DockingPreferences.setDottedDesktopStyle();
-}}}
+```java
+    // or version 1.0 alternative style
+    DockingPreferences.setDottedDesktopStyle();
+```
 
- [http://vldocking.googlecode.com/svn/wiki/dotted_style.jpg]
+ ![](dotted_style.jpg)
 
  _The "Dotted Style"_
 
-{{{
-// or version 2.0 default style 
-DockingPreferences.setFlatDesktopStyle();
-}}}
+```java
+    // or version 2.0 default style 
+    DockingPreferences.setFlatDesktopStyle();
+```
 
- [http://vldocking.googlecode.com/svn/wiki/flat_style.jpg]
+ ![](flat_style.jpg)
  
  _The default "Flat Style"_
 
@@ -326,4 +323,4 @@ DockingPreferences.setFlatDesktopStyle();
 
 ----
 
-Next : [tutorial9]
+Next : [Lesson 9 - Toolbars](tutorial9.md)

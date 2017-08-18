@@ -1,7 +1,4 @@
-#summary Working with heavyweight components
-#sidebar TableOfContents
-
-= Lesson 7 : Working with heavyweight components = 
+# Lesson 7 : Working with heavyweight components 
 
 
 This is the 7th and last part of the VLDocking Framework for Java Swing applications.
@@ -11,13 +8,14 @@ This lessons focuses on Heavyweight (AWT) components integration.
 
 Note : this feature is available since VLDocking Framework *1.1* and requires *Java 1.5*
 
-<p align="center">[http://vldocking.googlecode.com/svn/wiki/heavyweight.jpg]<br>
+![](heavyweight.jpg)<br>
+
 The JOGL heavyweight sample application (<a href="/jogldockingdemo.jnlp">launch it </a> with java web start)
 
 
-== Mixing heavyweight components - an overview == 
+## Mixing heavyweight components - an overview 
 
-=== The problem === 
+### The problem
 
 
 If you are familiar with Swing, you already know it's a bit tricky to have AWT
@@ -53,7 +51,7 @@ dockables, but it still can occur on the following situations :
  * the custom rendering of drag and gesture (done on a glasspane above the desktop) is intercepted by heavyweight components.
    
 
-=== But why is this feature important ? === 
+### But why is this feature important ?
  
 You may ask "why implement such a support in the docking framework when swing is now
 as fast as heavyweight components ?"
@@ -63,16 +61,16 @@ Here are some reason why we think it's important :
 
  * The *Open Cascade* renderer with java bindings provides a high performance simulation and 2D/3D rendering engine, and is used in industrial contexts.
  * The *Java3D* applications rely on an OpenGL or DirectX heavyweight binding and are used in many scientific/modeling projects.   
- * The *JOGL project *(and probably the future OpenGL JSR-231 official extension) provides an OpenGL pipeline to Swing applications. It is faster (especially visible when rendering animations) on low end systems when using its heavyweight renderer instead of the Swing one.
+ * The *JOGL project*(and probably the future OpenGL JSR-231 official extension) provides an OpenGL pipeline to Swing applications. It is faster (especially visible when rendering animations) on low end systems when using its heavyweight renderer instead of the Swing one.
  * The *JDIC browser component* allows you to embed a native browser (much better than JEditorPane !) into a Swing application. Unfortunately, it's a heavyweight component. But include it in a Dockable and you application will rock ! (It's not yet perfect due to some resource management bugs in JDIC, but works fine with community workarounds in most cases)
  * Many *legacy applications* that have been adapted to be displayed as AWT Canvas / ActiveX are still beeing used(and will probably remain for a long time).
  
 
-=== So is there a workaround ? === 
+### So is there a workaround ? 
    
 The answer is YES !
    
-But, you must be aware it will work only beginning *with Java 1.5 * (J2SE 5.0).
+But, you must be aware it will work only beginning *with Java 1.5* (J2SE 5.0).
    
 The workaround is based on a new method : `Container.setComponentZOrder(Component comp, int order)` that has been
 added to AWT in jdk 1.5. 
@@ -83,7 +81,7 @@ a Z-order priority (lower value = on top). Before that, it was platform-dependen
 As Swing components can be included in the Panel class (an AWT container), we just had to ensure the
 overlapping cases were managed with a correct Z-order and a proper heavyweight inclusion.
    
-* Drawbacks*
+*Drawbacks*
     
 The solution has some minor drawbacks : the drag and drop shape painting displays a grey rectangle when appearing
 on top of some heavyweight components (for example in the case of JOGL).
@@ -91,21 +89,21 @@ on top of some heavyweight components (for example in the case of JOGL).
 And painting is not generally as smooth as when using pure Swing components, so the animation effects are turned off
 when a heavyweight component is used.
 
-== Adding heavyweight support to the VLDocking Framework  == 
+## Adding heavyweight support to the VLDocking Framework 
 
  
 Now than you know the pros and the cons of using heavyweight components in the docking framework, let's have a look at
 how to enable it.
 
-=== A single method call === 
+### A single method call
 
-It's easy, you just have to place a single method call * before using the DockingDesktop *, generally in
+It's easy, you just have to place a single method call *before using the DockingDesktop*, generally in
 the main method of your application, or the pre-initialisation part of your application if it's more structured.
 
 
-{{{
-DockingPreferences.initHeavyWeightUsage();
-}}}
+```java
+    DockingPreferences.initHeavyWeightUsage();
+```
 
 
  
@@ -113,19 +111,19 @@ And that's it !
 
   
 Under the hood, this method also performs some additional settings : it calls
-     {{{ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false)}}} and {{{
-JPopupMenu.setDefaultLightWeightPopupEnabled(false)}}} to use the Swing standard workarounds
+     `ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false)` and 
+`JPopupMenu.setDefaultLightWeightPopupEnabled(false)` to use the Swing standard workarounds
 (so you don't have to do it yourself).
 
    
-=== Dynamic swichting of heavyweight support  === 
+### Dynamic swichting of heavyweight support
 
 Please note that you cannot currently switch dynamically between pure lightweight and heavyweight support.
 
 Call us if you have such a need...
 
 
-== Special workaround and optimization for the JDIC Web Browser component  == 
+## Special workaround and optimization for the JDIC Web Browser component 
 
 
 This is a new feature starting from VLDocking 2.0.2. 
@@ -140,15 +138,15 @@ for such cases, which works perfectly as long as you follow these simple rules :
  * You have to turn on another DockingPreferences switch 
 
 
-{{{
-DockingPreferences.setSingleHeavyWeightComponent(true);
-}}}
+```java
+    DockingPreferences.setSingleHeavyWeightComponent(true);
+```
 
 
 
  * You cannot make the heavyweight Floating (as this option is disabled by default, just think about not turning it on)
- * And finally, you must create the WebBrowser instance with the {{{autodispose}}} flag set to false, and don't 
-   forget to {{{dispose()}}} the browser when your window is closed (to release associated resources). 
+ * And finally, you must create the WebBrowser instance with the `autodispose` flag set to false, and don't 
+   forget to `dispose()` the browser when your window is closed (to release associated resources). 
 
 
 
@@ -161,7 +159,7 @@ two components competing for beeing on top of the other. Simple, reliable, and e
 You can download our <a href="/download/jdicdemo.zip"> JDIC sample application source code</a> to learn more on (and play with) the
 JDIC Browser support. 
 
-== Fixing slow repaint problems (mostly on Linux)  == 
+## Fixing slow repaint problems (mostly on Linux) 
 
 VLDocking 2.1.4 introduces a new UI Property that can be used to disable background 
 painting during drag and drop.
@@ -171,12 +169,13 @@ With this flag set, instead of displaying the Drop shapes above background compo
 a straight grey colored background is shown, reducing the overhead of creating and displaying the 
 background snapshot.
 
-
-UIManager.put("DragControler.paintBackgroundUnderDragRect", Boolean.FALSE)
+```java
+    UIManager.put("DragControler.paintBackgroundUnderDragRect", Boolean.FALSE)
+```
 
 Note : You can also use this property on other systems : it is not specific to Linux (it's just that 
 the slow repaint is more visible there).
 
 ----
 
-Next : [tutorial8 Lesson 8 customizing the UI]
+Next : [Lesson 8 - Customizing the UI](tutorial8.md)
