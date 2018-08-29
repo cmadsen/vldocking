@@ -18,6 +18,7 @@ You can read the complete license here :
 
 package com.vlsolutions.swing.tabbedpane;
 
+import java.awt.AWTError;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -25,8 +26,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.util.Map;
+
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
@@ -45,6 +49,7 @@ import javax.swing.UIManager;
  * (big thanks to Emmanuel GAUVRIT).
  * @update 2005/11/21 Lilian Chamontin : enhanced width calculation of the icon size.
  */
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class JTabbedPaneSmartIcon implements Icon, Cloneable {
 
 	/* Implementation : This icon is larger than standard icons : it also paints the tab title and optional buttons.
@@ -90,7 +95,8 @@ public class JTabbedPaneSmartIcon implements Icon, Cloneable {
 	/** gap between the text and the following icons*/
 	private int otherIconsGap;
 
-	private boolean antialiased = false;
+    private Map defaultHints;
+    private Map originalHints;
 
 	/* The container this icon is for (required to calculate proper widths and heights) */
 	private JTabbedPane container;
@@ -107,10 +113,11 @@ public class JTabbedPaneSmartIcon implements Icon, Cloneable {
 		this.otherIconsGap = UIManager.getInt("TabbedPane.otherIconsGap");
 		this.inBetweenOtherIconsGap = UIManager.getInt("TabbedPane.inBetweenOtherIconsGap");
 		invalidateSize();
+		originalHints = new RenderingHints(null);
 		try {
-			//mimic the unofficial aa settings of Swing
-			this.antialiased = "true".equals(System.getProperty("swing.aatext"));
-		} catch(SecurityException ignore) { // for untrusted web start apps failing gracefully
+		    defaultHints = (Map) Toolkit.getDefaultToolkit().getDesktopProperty("awt.font.desktophints");
+		} catch(AWTError ignore) {
+		    defaultHints = new RenderingHints(null);
 		}
 
 	}
@@ -191,11 +198,9 @@ public class JTabbedPaneSmartIcon implements Icon, Cloneable {
 	/** paints the icon (and the associated label and sub-icons) */
 	public void paintIcon(Component c, Graphics g, int x, int y) {
 		Graphics2D g2 = (Graphics2D) g;
-		Object renderingValue = null;
-		if(this.antialiased) {
-			renderingValue = g2.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		}
+		getRenderingHints(g2, defaultHints, originalHints);
+		g2.addRenderingHints(defaultHints);
+		
 		if(icon != null) {
 			icon.paintIcon(c, g, x, y);
 		}
@@ -224,10 +229,35 @@ public class JTabbedPaneSmartIcon implements Icon, Cloneable {
 			}
 		}
 
-		if(antialiased) {
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, renderingValue);
-		}
+		g2.addRenderingHints(originalHints);
 
+	}
+	
+	/**
+	  * Get rendering hints from a Graphics instance.
+	  * "hintsToSave" is a Map of RenderingHint key-values.
+	  * For each hint key present in that map, the value of that
+	  * hint is obtained from the Graphics and stored as the value
+	  * for the key in savedHints.
+	  * 
+	  * From: http://docs.oracle.com/javase/7/docs/api/java/awt/doc-files/DesktopProperties.html
+	  */
+	private Map getRenderingHints(Graphics2D g2d, Map hintsToSave, Map savedHints) {
+	     if (savedHints == null) {
+	         savedHints = new RenderingHints(null);
+	     } else {
+	         savedHints.clear();
+	     }
+	     if (hintsToSave.size() == 0) {
+	         return savedHints;
+	     }
+	     /* RenderingHints.keySet() returns Set */
+	     for (Object o : hintsToSave.keySet()) {
+	         RenderingHints.Key key = (RenderingHints.Key)o;
+	         Object value = g2d.getRenderingHint(key);
+	         savedHints.put(key, value);
+	     }
+	     return savedHints;
 	}
 
 	private SmartIconJButton findButtonAt(Point p) {
