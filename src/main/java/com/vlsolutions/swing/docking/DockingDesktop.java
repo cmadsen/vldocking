@@ -3743,7 +3743,7 @@ public class DockingDesktop extends JLayeredPane {
 
 		SplitContainer split = new SplitContainer(orientation);
 		split.setDividerLocation(location);
-
+		split.setResizeWeight(location);
 		boolean left = true;
 		for (int i = 0; i < node.getChildNodes().getLength(); i++) {
 			Node child = node.getChildNodes().item(i);

@@ -18,12 +18,22 @@ You can read the complete license here :
 
 package com.vlsolutions.swing.docking;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Window;
 import java.awt.peer.LightweightPeer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import javax.swing.*;
+
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JRootPane;
+import javax.swing.JTabbedPane;
 
 /** Utility class implementing search/replace algorithms used by the framework.
  * <p>
@@ -163,23 +173,25 @@ public class DockingUtilities {
 	private static float resetSplitWeight(Component comp) {
 		if(comp instanceof SplitContainer) {
 			SplitContainer split = (SplitContainer) comp;
-			float leftWeight = resetSplitWeight(split.getLeftComponent());
-			float rightWeight = resetSplitWeight(split.getRightComponent());
-			float sum = leftWeight + rightWeight;
-			if(sum == 0) {
-				split.setResizeWeight(0.5); // half weight for each side
-				return 0;
-			} else if(leftWeight == 0) { // and rightWeight != 0
-				split.setResizeWeight(0); // every resize goes to the right
-				return rightWeight;
-			} else if(rightWeight == 0) { // and leftWeight != 0
-				split.setResizeWeight(1); // every resize goes to the left
-				return leftWeight;
-			} else {
-				float proportion = leftWeight / sum; // when near 0 => right, when near 1 => left
-				split.setResizeWeight(proportion);
-				return Math.max(leftWeight, rightWeight);
-			}
+			return (float) split.getResizeWeight();
+			// float leftWeight = resetSplitWeight(split.getLeftComponent());
+			// float rightWeight = resetSplitWeight(split.getRightComponent());
+			// float sum = leftWeight + rightWeight;
+			// if(sum == 0) {
+			// split.setResizeWeight(0.5); // half weight for each side
+			// return 0;
+			// } else if(leftWeight == 0) { // and rightWeight != 0
+			// split.setResizeWeight(0); // every resize goes to the right
+			// return rightWeight;
+			// } else if(rightWeight == 0) { // and leftWeight != 0
+			// split.setResizeWeight(1); // every resize goes to the left
+			// return leftWeight;
+			// } else {
+			// float proportion = leftWeight / sum; // when near 0 => right,
+			// when near 1 => left
+			// split.setResizeWeight(proportion);
+			// return Math.max(leftWeight, rightWeight);
+			// }
 		} else if(comp instanceof SingleDockableContainer) {
 			return ((SingleDockableContainer) comp).getDockable().getDockKey().getResizeWeight();
 		} else if(comp instanceof TabbedDockableContainer) {
