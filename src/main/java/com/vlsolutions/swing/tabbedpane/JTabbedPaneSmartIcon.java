@@ -117,7 +117,10 @@ public class JTabbedPaneSmartIcon implements Icon, Cloneable {
 		try {
 		    defaultHints = (Map) Toolkit.getDefaultToolkit().getDesktopProperty("awt.font.desktophints");
 		} catch(AWTError ignore) {
-		    defaultHints = new RenderingHints(null);
+		} finally {
+		    if (defaultHints == null) {
+		        defaultHints = new RenderingHints(null);
+		    }
 		}
 
 	}
