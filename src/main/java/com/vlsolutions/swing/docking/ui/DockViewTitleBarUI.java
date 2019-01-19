@@ -62,7 +62,8 @@ import javax.swing.plaf.PanelUI;
 public class DockViewTitleBarUI extends PanelUI implements PropertyChangeListener {
 
 	/* hack to use custom painting except on mac os (ugly opacity effects)  */
-	private static boolean useCustomPaint = System.getProperty("os.name").toLowerCase().indexOf("mac os") < 0;
+	private static boolean useCustomPaint = !System.getProperty("os.name").contains("OS X")
+	        && !UIManager.getBoolean("DockViewTitleBar.disableCustomPaint");
 
 	private static Color panelColor = UIManager.getColor("Panel.background");
 	@SuppressWarnings("unused")

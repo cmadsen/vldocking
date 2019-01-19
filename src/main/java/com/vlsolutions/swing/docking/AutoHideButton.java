@@ -19,8 +19,10 @@ You can read the complete license here :
 package com.vlsolutions.swing.docking;
 
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Color;
 import java.awt.Insets;
 import java.awt.Dimension;
 import java.beans.*;
@@ -53,6 +55,9 @@ public class AutoHideButton extends JLabel {
 	private Timer notificationTimer; // blinking timer
 	private int blinkCount = 0;
 	private int MAX_BLINKS = UIManager.getInt("DockingDesktop.notificationBlinkCount");
+
+	private Color highlightColor = UIManager.getColor("VLDocking.highlight");
+	private Color bgColor = UIManager.getColor("AutoHideButton.background");
 
 	private PropertyChangeListener keyListener = new PropertyChangeListener() {
 
@@ -107,7 +112,7 @@ public class AutoHideButton extends JLabel {
 			setBackground(UIManager.getColor("DockingDesktop.notificationColor"));
 			setOpaque(true);
 		} else {
-			setOpaque(false);
+		    setHighlighted(false);
 		}
 		repaint();
 	}
@@ -142,7 +147,8 @@ public class AutoHideButton extends JLabel {
 
 		setFocusable(true);
 
-		setOpaque(false);
+		setBackground(bgColor);
+		setOpaque(bgColor != null);
 
 		setIconTextGap(4);
 		setAlignmentY(1);
@@ -191,11 +197,22 @@ public class AutoHideButton extends JLabel {
 	/** Selects or unselects the button */
 	public void setSelected(boolean selected) {
 		this.selected = selected;
-		setOpaque(selected);
-		repaint();
+		setHighlighted(selected);
 		if(selected) {
 			key.setNotification(false); // in case we were in notification mode
 		}
+	}
+	
+	/** Sets the button highlight (on rollover, etc.) */
+	public void setHighlighted(boolean highlighted) {
+	    if (highlighted) {
+    	    setBackground(highlightColor);
+            setOpaque(true);
+	    } else {
+	        setBackground(bgColor);
+	        setOpaque(bgColor != null);
+	    }
+	    repaint();
 	}
 
 	public String getUIClassID() {
