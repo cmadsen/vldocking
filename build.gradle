@@ -1,68 +1,85 @@
 plugins {
-  id 'com.jfrog.bintray' version '1.6'
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+    id 'jacoco'
 }
-
-apply plugin: 'java'
-apply plugin: 'maven-publish'
-
-sourceCompatibility = '1.6'
-targetCompatibility = '1.6'
 
 version = '3.0.5'
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.5'
-    testCompile 'ch.qos.logback:logback-classic:1.0.13'
-    testCompile 'junit:junit:4.8'
+    implementation(libs.slf4j.api)
+    testImplementation(libs.junit4)
+    testRuntimeOnly(libs.logback)
 }
 
-task sourceJar(type: Jar) {
-    from sourceSets.main.allJava
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+        vendor = JvmVendorSpec.ADOPTIUM
+    }
+    withSourcesJar()
+    withJavadocJar()
 }
 
 javadoc {
     failOnError = false
 }
 
-task javadocJar(type: Jar) {
-    from javadoc.outputs
+sourcesJar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 publishing {
     publications {
-        MyPublication(MavenPublication) {
-            groupId 'org.omegat'
+        mavenJava(MavenPublication) { publication ->
+            groupId = 'org.omegat'
             artifactId 'vldocking'
-            version version
-
             from components.java
-            artifact sourceJar {
-                classifier 'sources'
+
+            pom {
+                name = 'vldocking'
+                description = 'vldocking library'
+                url = 'https://omegat.org'
+                scm {
+                    connection = "scm:git:https://github.com/omegat-org/vldocking"
+                    developerConnection = "scm:git:https://github.com/omegat-org/vldocking"
+                    url = "https://github.com/omegat-org/vldocking/"
+                }
+                licenses {
+                    license {
+                        name = 'The GNU Lesser General Public License, Version 3.0'
+                        url = 'https://www.gnu.org/licenses/lgpl-3.0.html'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'omegat'
+                        name = 'OmegaT Developers'
+                        email = 'info@omegat.org'
+                    }
+                }
             }
-            artifact javadocJar {
-                classifier 'javadoc'
+        }
+    }
+    repositories {
+        maven {
+            url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+            credentials(PasswordCredentials) {
+                username findProperty('ossrhUsername')
+                password findProperty('ossrhPassword')
             }
         }
     }
 }
 
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    pkg {
-        repo = 'maven'
-        name = 'vldocking'
-        licenses = ['LGPL-3.0']
-        userOrg = 'omegat-org'
-        websiteUrl = 'https://github.com/omegat-org/vldocking'
-        vcsUrl = 'https://github.com/omegat-org/vldocking.git'
-        version {
-            name = project.version
-        }
+signing {
+    sign publishing.publications.mavenJava
+    if (!findProperty("signing.keyId")) {
+        useGpgCmd()
     }
-    publications = ['MyPublication']
 }
