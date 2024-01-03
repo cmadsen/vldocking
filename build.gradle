@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.nexus.publish)
 }
 
-version = '3.0.5-1'
+version = '3.0.5-2'
 
 repositories {
     mavenCentral()
