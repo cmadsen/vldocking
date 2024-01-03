@@ -18,8 +18,13 @@ You can read the complete license here :
 
 package com.vlsolutions.swing.docking;
 
-import java.awt.*;
-import java.awt.peer.LightweightPeer;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Window;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -290,27 +295,19 @@ public class DockingUtilities {
 	/** Utility method to find out if a component is heavyweight (of if it contains a heavyweight comp)*/
 	public static boolean isHeavyWeightComponent(Component comp) {
 		if(comp instanceof Container) {
-			// short cut
-			@SuppressWarnings("deprecation")
-			Object peer = comp.getPeer();
-			if(! (peer == null || peer instanceof LightweightPeer)) {
-				// it's not a lightweight
-				return true;
-			} else {
-				// long way
-				Container c = (Container) comp;
-				for(int i = 0; i < c.getComponentCount(); i++) {
-					Component child = c.getComponent(i);
-					if(isHeavyWeightComponent(child)) {
-						return true;
-					}
+			Container c = (Container) comp;
+			for(int i = 0; i < c.getComponentCount(); i++) {
+				Component child = c.getComponent(i);
+				if(isHeavyWeightComponent(child)) {
+					return true;
 				}
-				return false;
 			}
+			return false;
 		} else {
-			@SuppressWarnings("deprecation")
-			Object peer = comp.getPeer();
-			return ! (peer == null || peer instanceof LightweightPeer);
+			// Check if the component is managed by JRootPane or JLayeredPane
+			// Heavyweight components might be contained within these panes
+			Container parent = comp.getParent();
+			return (parent instanceof JRootPane || parent instanceof JLayeredPane);
 		}
 	}
 
