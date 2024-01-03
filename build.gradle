@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
     id 'signing'
     id 'jacoco'
+    alias(libs.plugins.nexus.publish)
 }
 
 version = '3.0.5-1'
@@ -72,20 +73,25 @@ publishing {
             }
         }
     }
-    repositories {
-        maven {
-            url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
-            credentials(PasswordCredentials) {
-                username findProperty('ossrhUsername')
-                password findProperty('ossrhPassword')
-            }
-        }
-    }
 }
 
 signing {
     sign publishing.publications.mavenJava
     if (!findProperty("signing.keyId")) {
         useGpgCmd()
+    }
+}
+def sonatypeUsername = project.hasProperty("sonatypeUsername")? project.property('sonatypeUsername') : System.getenv('SONATYPE_USER')
+def sonatypePassword = project.hasProperty("sonatypePassword")? project.property('sonatypePassword') : System.getenv('SONATYPE_PASS')
+if (sonatypeUsername != null && sonatypePassword != null) {
+    nexusPublishing {
+        repositories{
+            sonatype {
+                nexusUrl.set(new URI("https://s01.oss.sonatype.org/service/local/"))
+                snapshotRepositoryUrl.set(new URI("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+                username.set(sonatypeUsername)
+                password.set(sonatypePassword)
+            }
+        }
     }
 }

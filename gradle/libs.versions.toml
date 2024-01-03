@@ -7,3 +7,6 @@ logback = "1.4.12"
 slf4j-api = {group = "org.slf4j", name = "slf4j-api",  version.ref = "slf4j"}
 junit4 = {group = "junit", name = "junit", version.ref = "junit"}
 logback = {group = "ch.qos.logback", name = "logback-classic", version.ref = "logback"}
+
+[plugins]
+nexus-publish = {id = "io.github.gradle-nexus.publish-plugin", version = "2.0.0-rc-1"}
