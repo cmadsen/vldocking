@@ -304,6 +304,7 @@ class RelativeDockingUtilities {
 	/** Tries to find the best position to insert an hidden dockable, and insert it
 	 * @deprecated  use getInsertionDockingAction / applyDockingAction instead
 	 */
+	@Deprecated
 	public static SingleDockableContainer insertDockable(Container relativeAncestorContainer, Dockable dockable, RelativeDockablePosition position) {
 
 		if(position == null) {

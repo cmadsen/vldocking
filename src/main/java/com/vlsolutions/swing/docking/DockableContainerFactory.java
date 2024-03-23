@@ -66,6 +66,7 @@ public abstract class DockableContainerFactory {
 
 	/** @deprecated use the other createDockableContainer method ({@link #createDockableContainer(Dockable, int)} 
 	 */
+	@Deprecated
 	public SingleDockableContainer createDockableContainer(Dockable dockable, boolean c) {
 		return createDockableContainer(dockable, ParentType.PARENT_SPLIT_CONTAINER);
 	}

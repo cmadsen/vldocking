@@ -51,6 +51,7 @@ public class DockingSplitPaneUI extends BasicSplitPaneUI {
 	 * if false, the divider will remain empty. Default is false 
 	 * @deprecated use UIManager.put("SplitContainer.drawDotsDelimitors", Boolean) instead
 	 */
+	@Deprecated
 	public static void setDrawDelimitors(boolean draw) {
 		drawDelimitors = draw;
 	}
