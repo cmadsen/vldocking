@@ -193,7 +193,7 @@ public class AutoHideExpandPanel extends JPanel implements SingleDockableContain
 				try {
 					// this.setComponentZOrder(heavyPanel, 0); // top most
 					Method m = Container.class.getMethod("setComponentZOrder", new Class[] {Component.class, int.class});
-					m.invoke(this, new Object[] {heavyPanel, new Integer(0)});
+					m.invoke(this, new Object[] {heavyPanel, 0});
 				} catch(Exception ignore) {
 				}
 
@@ -271,7 +271,7 @@ public class AutoHideExpandPanel extends JPanel implements SingleDockableContain
 				try {
 					// this.setComponentZOrder(heavyPanel, 0); // top most
 					Method m = Container.class.getMethod("setComponentZOrder", new Class[] {Component.class, int.class});
-					m.invoke(this, new Object[] {heavyPanel, new Integer(0)});
+					m.invoke(this, new Object[] {heavyPanel, 0});
 				} catch(Exception ignore) {
 				}
 

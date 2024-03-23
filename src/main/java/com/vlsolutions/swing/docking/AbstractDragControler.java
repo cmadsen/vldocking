@@ -474,7 +474,7 @@ abstract class AbstractDragControler implements DragControler {
 		Window[] children = w.getOwnedWindows();
 		for(int i = 0; i < children.length; i++) {
 			if(children[i] instanceof FloatingDockableContainer && children[i].isVisible()) {
-				Window wChild = (Window) children[i]; // assumed by the FloatingDockableContainer interface
+				Window wChild = children[i]; // assumed by the FloatingDockableContainer interface
 				Rectangle bounds = wChild.getBounds();
 				if(bounds.contains(p)) {
 					// an owned window is on top of the desktop, at current mouse position

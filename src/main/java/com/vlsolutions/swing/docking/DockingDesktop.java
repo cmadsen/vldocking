@@ -453,7 +453,7 @@ public class DockingDesktop extends JLayeredPane {
 		expandPanel.installDocking(this);
 		expandPanel.setVisible(false);
 
-		add(mouseMotionGrabber, new Integer(MODAL_LAYER.intValue() - 1));
+		add(mouseMotionGrabber, MODAL_LAYER - 1);
 		add(expandPanel, MODAL_LAYER);
 
 		ComponentListener resizeListener = new ComponentAdapter() {
@@ -1668,13 +1668,13 @@ public class DockingDesktop extends JLayeredPane {
 					viewParent.remove((Component) tdc);
 					Component other = viewParent.getRightComponent();
 					// replace viewParent by other in viewParent's hierarchy
-					Container viewGParent = (Container) viewParent.getParent();
+					Container viewGParent = viewParent.getParent();
 					DockingUtilities.replaceChild(viewGParent, viewParent,
 							other);
 				} else {
 					viewParent.remove((Component) tdc);
 					Component other = viewParent.getLeftComponent();
-					Container viewGParent = (Container) viewParent.getParent();
+					Container viewGParent = viewParent.getParent();
 					DockingUtilities.replaceChild(viewGParent, viewParent,
 							other);
 				}
@@ -2466,15 +2466,13 @@ public class DockingDesktop extends JLayeredPane {
 						viewParent.remove((Component) dc);
 						Component other = viewParent.getRightComponent();
 						// replace viewParent by other in viewParent's hierarchy
-						Container viewGParent = (Container) viewParent
-								.getParent();
+						Container viewGParent = viewParent.getParent();
 						DockingUtilities.replaceChild(viewGParent, viewParent,
 								other);
 					} else {
 						viewParent.remove((Component) dc);
 						Component other = viewParent.getLeftComponent();
-						Container viewGParent = (Container) viewParent
-								.getParent();
+						Container viewGParent = viewParent.getParent();
 						DockingUtilities.replaceChild(viewGParent, viewParent,
 								other);
 					}
@@ -3210,8 +3208,7 @@ public class DockingDesktop extends JLayeredPane {
 	private void xmlWriteDockableWithRelativePosition(Dockable dockable,
 			PrintWriter out) throws IOException {
 		DockableState state = context.getDockableState(dockable);
-		RelativeDockablePosition position = (RelativeDockablePosition) state
-				.getPosition();
+		RelativeDockablePosition position = state.getPosition();
 		boolean isCompound = dockable instanceof CompoundDockable;
 		if (isCompound) {
 			out.println("<Dockable compound=\"true\">");
@@ -3245,8 +3242,7 @@ public class DockingDesktop extends JLayeredPane {
 		 * its position then traverse its children
 		 */
 		DockableState state = context.getDockableState(dockable);
-		RelativeDockablePosition position = (RelativeDockablePosition) state
-				.getPosition();
+		RelativeDockablePosition position = state.getPosition();
 		DockKey key = dockable.getDockKey();
 		out.println("<Key dockName=\"" + key.getKey() + "\"/>");
 		out.println("<RelativePosition x=\"" + position.getX() + "\" y=\""
@@ -3259,8 +3255,7 @@ public class DockingDesktop extends JLayeredPane {
 	private void xmlWriteFloatingDockable(Dockable dockable, PrintWriter out)
 			throws IOException {
 		DockableState state = context.getDockableState(dockable);
-		RelativeDockablePosition position = (RelativeDockablePosition) state
-				.getPosition();
+		RelativeDockablePosition position = state.getPosition();
 		boolean isCompound = dockable instanceof CompoundDockable;
 		if (isCompound) {
 			out.println("<Dockable compound=\"true\">");
@@ -3418,7 +3413,7 @@ public class DockingDesktop extends JLayeredPane {
 		ArrayList<Dockable> floatingDockables = context.getDockablesByState(
 				this, DockableState.Location.FLOATING);
 		for (int i = 0; i < floatingDockables.size(); i++) {
-			Dockable d = (Dockable) floatingDockables.get(i);
+			Dockable d = floatingDockables.get(i);
 			remove(d);
 		}
 
@@ -4369,6 +4364,7 @@ public class DockingDesktop extends JLayeredPane {
 	 *             behaviour
 	 * 
 	 */
+	@Deprecated
 	public void setAutoResizableDockable(Dockable dockable) {
 		/* this.autoResizeableDockable = dockable; */
 		DockingUtilities.updateResizeWeights(dockingPanel);
@@ -4442,7 +4438,7 @@ public class DockingDesktop extends JLayeredPane {
 			group.remove(dockable);
 			if (group.size() == 1) { // end of grouping as there are no more
 										// dockables linked.
-				Dockable d = (Dockable) group.removeFirst();
+				Dockable d = group.removeFirst();
 				tabbedGroups.remove(d);
 			}
 		}

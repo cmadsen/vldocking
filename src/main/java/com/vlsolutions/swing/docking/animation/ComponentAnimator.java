@@ -127,7 +127,7 @@ public class ComponentAnimator {
 	/** loops over the listeners to fire animation event */
 	private void fireAnimationEvent(AnimationEvent e) {
 		for(int i = 0; i < listeners.size(); i++) {
-			((AnimationListener) listeners.get(i)).animation(e);
+			listeners.get(i).animation(e);
 		}
 	}
 

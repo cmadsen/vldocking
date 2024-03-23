@@ -116,7 +116,7 @@ public class DockingContext {
 			Window w = (Window) it.next();
 			boolean ancestor = false;
 			for(int i = 0; i < desktops.size(); i++) {
-				DockingDesktop desk = (DockingDesktop) desktops.get(i);
+				DockingDesktop desk = desktops.get(i);
 				if(w.isAncestorOf(desk)) {
 					ancestor = true;
 					break;
@@ -247,7 +247,7 @@ public class DockingContext {
 		out.println("<?xml version=\"1.0\"?>");
 		out.println("<VLDocking version=\"2.1\">");
 		for(int i = 0; i < desktops.size(); i++) {
-			DockingDesktop desktop = (DockingDesktop) desktops.get(i);
+			DockingDesktop desktop = desktops.get(i);
 			desktop.writeDesktopNode(out);
 		}
 		out.println("</VLDocking>");
@@ -286,7 +286,7 @@ public class DockingContext {
 		// remove all dockable states
 
 		for(int i = 0; i < desktops.size(); i++) {
-			DockingDesktop desk = (DockingDesktop) desktops.get(i);
+			DockingDesktop desk = desktops.get(i);
 			desk.clear();
 		}
 

@@ -120,7 +120,7 @@ public class DockingPreferences {
 		DockingUISettings.getInstance().installUI();
 		UIManager.put("DockView.singleDockableBorder", new ShadowBorder());
 		UIManager.put("DockView.tabbedDockableBorder", new ShadowBorder(false));
-		UIManager.put("TabbedDockableContainer.tabPlacement", new Integer(SwingConstants.BOTTOM));
+		UIManager.put("TabbedDockableContainer.tabPlacement", SwingConstants.BOTTOM);
 	}
 
 	/** Convenience method to use the VLDocking 2.0 layout and border style.
@@ -142,7 +142,7 @@ public class DockingPreferences {
 		Border flatSingleBorder = BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1), innerFlatSingleBorder);
 		UIManager.put("DockView.singleDockableBorder", flatSingleBorder);
 		UIManager.put("DockView.tabbedDockableBorder", null);
-		UIManager.put("TabbedDockableContainer.tabPlacement", new Integer(SwingConstants.TOP));
+		UIManager.put("TabbedDockableContainer.tabPlacement", SwingConstants.TOP);
 	}
 
 	/** Another docking style with ligh dots between dockables.
@@ -158,7 +158,7 @@ public class DockingPreferences {
 		UIManager.put("DockView.singleDockableBorder", innerFlatSingleBorder);
 		//BorderFactory.createLineBorder(shadow));
 		UIManager.put("DockView.tabbedDockableBorder", null);
-		UIManager.put("TabbedDockableContainer.tabPlacement", new Integer(SwingConstants.TOP));
+		UIManager.put("TabbedDockableContainer.tabPlacement", SwingConstants.TOP);
 
 		UIManager.put("SplitContainer.drawDotsDelimitors", Boolean.TRUE);
 	}
@@ -171,7 +171,7 @@ public class DockingPreferences {
 
 		//UIManager.put("DockView.singleDockableBorder", null);
 		UIManager.put("DockView.tabbedDockableBorder", null);
-		UIManager.put("TabbedDockableContainer.tabPlacement", new Integer(SwingConstants.TOP));
+		UIManager.put("TabbedDockableContainer.tabPlacement", SwingConstants.TOP);
 
 		UIManager.put("SplitContainer.drawDotsDelimitors", Boolean.FALSE);
 		UIManager.put("SplitContainer.hImage", horizontalTile);

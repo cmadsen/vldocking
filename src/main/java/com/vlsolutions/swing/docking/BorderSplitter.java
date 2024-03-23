@@ -95,7 +95,7 @@ public class BorderSplitter {
 				remainingDockable = tabAncestor.getDockableAt(1);
 			}
 		}
-		((DockDropEvent) event).acceptDrop();
+		event.acceptDrop();
 		if(container instanceof TabbedDockableContainer) {
 			split(event, container, position);
 		} else {

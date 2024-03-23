@@ -146,7 +146,7 @@ public class DockingSelectorDialog extends JDialog {
 				closingState = CONFIRM;
 				for(int i = 0; i < model.states.length; i++) {
 					DockableState state = model.states[i];
-					boolean newVisible = ((Boolean) visibleViews.get(state)).booleanValue();
+					boolean newVisible = visibleViews.get(state);
 					boolean oldVisible = state.getLocation() != DockableState.Location.CLOSED;
 					if(oldVisible != newVisible) {
 						if(newVisible) {
@@ -315,7 +315,7 @@ public class DockingSelectorDialog extends JDialog {
 				case 1:
 					return state.getDockable().getDockKey().getName();
 				case 2:
-					return (Boolean) visibleViews.get(state);
+					return visibleViews.get(state);
 			}
 			return null;
 		}

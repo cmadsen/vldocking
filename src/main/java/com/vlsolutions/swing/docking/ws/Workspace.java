@@ -79,16 +79,16 @@ public class Workspace {
 
 	/** Returns the index-th desktop contained */
 	public WSDesktop getDesktop(int index) {
-		return (WSDesktop) desktops.get(index);
+		return desktops.get(index);
 	}
 
 	/** Returns a desktop identified by its name or null if not found */
 	public WSDesktop getDesktop(String desktopName) {
 		if(desktops.size() == 1) {
-			return (WSDesktop) desktops.get(0);
+			return desktops.get(0);
 		}
 		for(int i = 0; i < desktops.size(); i++) {
-			WSDesktop d = (WSDesktop) desktops.get(i);
+			WSDesktop d = desktops.get(i);
 			if(d.getDesktopName().equals(desktopName)) {
 				return d;
 			}
@@ -107,7 +107,7 @@ public class Workspace {
 		out.println("<?xml version=\"1.0\"?>");
 		out.println("<VLDocking version=\"2.1\">");
 		for(int i = 0; i < desktops.size(); i++) {
-			WSDesktop desktop = (WSDesktop) desktops.get(i);
+			WSDesktop desktop = desktops.get(i);
 			desktop.writeDesktopNode(out);
 		}
 		out.println("</VLDocking>");
@@ -163,7 +163,7 @@ public class Workspace {
 		out.println("<?xml version=\"1.0\"?>");
 		out.println("<VLDocking version=\"2.1\">");
 		for(int i = 0; i < desktops.size(); i++) {
-			WSDesktop desktop = (WSDesktop) desktops.get(i);
+			WSDesktop desktop = desktops.get(i);
 			desktop.writeDesktopNode(out);
 		}
 		out.println("</VLDocking>");
@@ -176,7 +176,7 @@ public class Workspace {
 		// remove all dockable states
 
 		for(int i = 0; i < desktops.size(); i++) {
-			WSDesktop desk = (WSDesktop) desktops.get(i);
+			WSDesktop desk = desktops.get(i);
 			desk.clear();
 		}
 

@@ -752,7 +752,7 @@ public class DockingUISettings {
 		UIManager.put("DockViewTitleBarUI",
 				"com.vlsolutions.swing.docking.ui.DockViewTitleBarUI");
 
-		UIManager.put("DockViewTitleBar.height", new Integer(20));
+		UIManager.put("DockViewTitleBar.height", 20);
 		UIManager.put("DockViewTitleBar.closeButtonText",
 				UIManager.getString("InternalFrameTitlePane.closeButtonText"));
 		UIManager.put("DockViewTitleBar.minimizeButtonText", UIManager
@@ -793,7 +793,7 @@ public class DockingUISettings {
 	public void installSplitContainerSettings() {
 		UIManager.put("DockingSplitPaneUI",
 				"com.vlsolutions.swing.docking.ui.DockingSplitPaneUI");
-		UIManager.put("SplitContainer.dividerSize", new Integer(4));
+		UIManager.put("SplitContainer.dividerSize", 4);
 		UIManager.put("SplitContainer.isResizingEnabled", Boolean.TRUE); // 2007/08/11
 
 	}
@@ -802,8 +802,7 @@ public class DockingUISettings {
 	public void installTabbedContainerSettings() {
 		@SuppressWarnings("unused")
 		final String prefix = "/com/vldocking/swing/docking/";
-		UIManager.put("TabbedDockableContainer.tabPlacement", new Integer(
-				SwingConstants.TOP));
+		UIManager.put("TabbedDockableContainer.tabPlacement", SwingConstants.TOP);
 
 		UIManager.put("DockTabbedPane.closeButtonText",
 				UIManager.getString("InternalFrameTitlePane.closeButtonText"));
@@ -832,8 +831,8 @@ public class DockingUISettings {
 	public void installCloseableTabs() {
 		// this one is already provided by the look and feel
 		// UIManager.put("TabbedPane.textIconGap", new Integer(4));
-		UIManager.put("TabbedPane.otherIconsGap", new Integer(8));
-		UIManager.put("TabbedPane.inBetweenOtherIconsGap", new Integer(4));
+		UIManager.put("TabbedPane.otherIconsGap", 8);
+		UIManager.put("TabbedPane.inBetweenOtherIconsGap", 4);
 		UIManager.put("TabbedPane.alternateTabIcons", Boolean.FALSE);
 	}
 
@@ -975,7 +974,7 @@ public class DockingUISettings {
 	/** installs the DockinDesktop related properties */
 	public void installDesktopSettings() {
 		UIManager.put("DockingDesktop.notificationColor", Color.ORANGE);
-		UIManager.put("DockingDesktop.notificationBlinkCount", new Integer(5));
+		UIManager.put("DockingDesktop.notificationBlinkCount", 5);
 		UIManager.put(
 				"DragControler.stopDragCursor",
 				new ImageIcon(getClass().getResource(
